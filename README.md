@@ -27,8 +27,13 @@ Example: my_lv
 # Step 1: Launch EC2 Instance
 
 Create EC2 instance (Amazon Linux / RHEL)
+
+t2.micro
+
 Select key pair
+
 Add EBS volume (extra disk, e.g., 10–20 GB)
+
 Launch instance
 
 # Step 2: Connect to Instance
@@ -44,10 +49,13 @@ lsblk
 blkid
 
 # Step 4: Install LVM
+```bash
 
 yum install lvm2 -y
-
+```
+```bash
 lvm version
+```
 
 # Step 5: Create Physical Volume (PV)
 
@@ -65,48 +73,78 @@ pvdisplay
 ```
 
 # Step 6: Create Volume Group (VG)
+```bash
 vgcreate my_vg /dev/xvdf
-
+```
+```bash
 vgdisplay
+```
 
 # Step 7: Create Logical Volumes (LV)
 
 Create Volume 1
 
+```bash
+
 lvcreate -n vol1 -L 5G my_vg
 
+```
+
 Create Volume 2
+
+```bash
 lvcreate -n vol2 -L 7G my_vg
 
+```
+```bash 
 lsblk
+```
 
 
 (You will see type as lvm)
 
 # Step 8: Create Filesystem
-
+```bash 
 mkfs.ext4 /dev/my_vg/vol1
-
+```
+```bash
 mkfs.ext4 /dev/my_vg/vol2
-
+```
+```bash
 blkid
+```
 
 # Step 9: Create Mount Directory
-
+```bash
 mkdir /data
-
+```
+```bash
 mkdir /backup
+```
 
 # Step 10: Mount Logical Volumes
-
+```bash
 mount /dev/my_vg/vol1 /data
-mount /dev/my_vg/vol2 /backup
+```
 
+```bash
+mount /dev/my_vg/vol2 /backup
+```
+```bash
 df -h
 
+```
+
 # Step 11: Test
+
+```bash
 cd /data
+
+```
+```bash
 touch file1 file2 file3
+
+```
 
 # Step 12: Reduce Logical Volume (Important Fix)
 
