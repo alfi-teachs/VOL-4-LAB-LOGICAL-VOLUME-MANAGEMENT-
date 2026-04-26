@@ -149,32 +149,57 @@ touch file1 file2 file3
 # Step 12: Reduce Logical Volume (Important Fix)
 
 You must unmount and check filesystem before reducing, otherwise data corruption can happen.
-
+```bash
 umount /data
+```
+```bash
 e2fsck -f /dev/my_vg/vol1
+```
+```bash
 resize2fs /dev/my_vg/vol1 4G
+```
+```bash
 lvreduce -L 4G /dev/my_vg/vol1
+```
+
+```bash
 
 mount /dev/my_vg/vol1 /data
+```
+
+```bash
 lsblk
+```
 
 Optional (Recommended): Permanent Mount
 
 Edit fstab:
 
+```bash 
+
 vim /etc/fstab
+
+```
 
 
 Add:
 
+```bash
+
 /dev/my_vg/vol1   /data    ext4    defaults    0 0
+
+```
+```bash
 /dev/my_vg/vol2   /backup  ext4    defaults    0 0
+
+```
 
 
 Test:
 
+```bash
 mount -a
-
+```
 Key Corrections I Made
 Fixed device naming (my_vg instead of mixed my-vg)
 Corrected path (/dev/my_vg/vol1, not vol-1)
