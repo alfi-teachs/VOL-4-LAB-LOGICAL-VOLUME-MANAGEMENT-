@@ -32,21 +32,35 @@ t2.micro
 
 Select key pair
 
+```bash
+
 Add EBS volume (extra disk, e.g., 10–20 GB)
+
+```
 
 Launch instance
 
 # Step 2: Connect to Instance
-
+```bash
 ssh -i key.pem ec2-user@<public-ip>
 
-# Step 3: Check Disks & Switch to Root
+```
 
+# Step 3: Check Disks & Switch to Root
+```bash
 sudo su
+
+```
+```bash
 
 lsblk
 
+```
+```bash
+
 blkid
+
+```
 
 # Step 4: Install LVM
 ```bash
